@@ -252,13 +252,24 @@ body.bloqueo-scroll {
    4. SECCIÓN 1: PORTADA PRINCIPAL (ESTILO ORIGINAL)
    ========================================== */
 .portada {
+    position: relative;
+    overflow: hidden;
+    background: transparent;  /* ← ESTA LÍNEA NUEVA, clave */
+}
+
+.portada-fondo-fijo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
     background-image: 
         linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), 
         url('assets/imagenes/foto1.jpeg'); 
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-attachment: fixed;
+    z-index: -1;
 }
 
 .portada .esquina {
@@ -640,4 +651,13 @@ input[type="text"]:focus, select:focus {
     display: block;
     margin: 0 auto;
     filter: drop-shadow(0 2px 4px rgba(0, 35, 102, 0.1));
+}
+/* ==========================================
+   SEPARADOR FLORAL (fondo opaco)
+   ========================================== */
+.separador-seccion {
+    background-color: var(--rosa-suave);
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
 }

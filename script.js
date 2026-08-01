@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // 3. ENVÍO Y VALIDACIÓN CON FETCH (GOOGLE APPS SCRIPT)
     // ==========================================
     const scriptURL = 'https://script.google.com/macros/s/AKfycbw3lD0yfTzg1m7tbv8doRIpr_VA6WlgnCbM_PYeB0a1PcOlUTsmDP4jad-gyx5d-vo2/exec'; 
-    const formAsistencia = document.getElementById('form-asistencia');
+    const formAsistencia = document.getElementById('form-asfistencia');
 
     const nombreInput = document.getElementById('nombre');
     const asistenciaSelect = document.getElementById('asistencia');
