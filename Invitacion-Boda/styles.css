@@ -1,0 +1,643 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400..700&display=swap');
+
+/* ==========================================
+   1. VARIABLES Y RESET GENERAL
+   ========================================== */
+:root {
+    --azul-francia: #002366;
+    --azul-francia-oscuro: #001744;
+    --rosa-suave: #f7e6e9;
+    --rosa-dorado-suave: #f3d3d7;
+    --rosa-dorado-oscuro: #8c4752;
+    --dorado-pastel: #cca87c;
+    --fondo-blanco: #ffffff;
+    --texto-oscuro: #002366;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--rosa-suave);
+    color: var(--azul-francia);
+    overflow-x: hidden;
+}
+
+body.bloqueo-scroll {
+    overflow: hidden;
+}
+
+/* ==========================================
+   2. OVERLAY SOBRE Y EFECTO ZOOM (INTRO)
+   ========================================== */
+.overlay-sobre {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle at center, #ffffff 0%, #f2ebe3 100%);
+    z-index: 99999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 1.2s ease, visibility 1.2s ease;
+    cursor: pointer;
+}
+
+.envelope-wrapper {
+    perspective: 1200px;
+    transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 1s ease 0.2s;
+}
+
+.envelope {
+    position: relative;
+    width: 340px;
+    height: 230px;
+    background-color: #d2c3b1;
+    border-radius: 4px;
+    overflow: visible; 
+    box-shadow: 
+        0 22px 50px rgba(0, 35, 102, 0.15),
+        0 8px 18px rgba(0, 0, 0, 0.08);
+}
+
+.envelope-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, #c2b29f 0%, #ded0bf 100%);
+    border-radius: 4px;
+}
+
+.envelope-left {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #f7f2ea 0%, #e3d3c1 100%);
+    clip-path: polygon(0 0, 51% 50%, 0 100%);
+    filter: drop-shadow(2px 0 4px rgba(110, 85, 60, 0.15));
+    z-index: 3;
+}
+
+.envelope-right {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(-135deg, #f7f2ea 0%, #decbc7 100%);
+    clip-path: polygon(100% 0, 100% 100%, 49% 50%);
+    filter: drop-shadow(-2px 0 4px rgba(110, 85, 60, 0.15));
+    z-index: 3;
+}
+
+.envelope-bottom {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(0deg, #f9f5ee 0%, #e8d7c5 100%);
+    clip-path: polygon(0 100%, 100% 100%, 50% 42%);
+    border-radius: 0 0 4px 4px;
+    filter: drop-shadow(0 -4px 8px rgba(110, 85, 60, 0.18));
+    z-index: 4;
+}
+
+.envelope-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, #ffffff 0%, #ede0d0 100%);
+    clip-path: polygon(0 0, 100% 0, 50% 55%);
+    transform-origin: top center;
+    transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1), z-index 1.5s;
+    filter: drop-shadow(0 6px 10px rgba(90, 65, 40, 0.25));
+    z-index: 5;
+}
+
+.envelope-seal {
+    position: absolute;
+    top: 52%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 85px; 
+    z-index: 10;
+    cursor: pointer;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.sello-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.35));
+}
+
+.overlay-sobre.abrir .envelope-top {
+    transform: rotateX(180deg);
+    z-index: 1;
+}
+
+.overlay-sobre.abrir .envelope-seal {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+}
+
+.overlay-sobre.abrir .envelope-wrapper {
+    transform: scale(5);
+    opacity: 0;
+}
+
+.overlay-sobre.ocultar {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* ==========================================
+   3. ESTRUCTURA GLOBAL: FONDO ROSA Y MARCO AZUL
+   ========================================== */
+.pantalla-seccion {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 20px;
+    background-color: var(--rosa-suave);
+    color: var(--azul-francia);
+}
+
+.pantalla-seccion h1,
+.pantalla-seccion .subtitulo-seccion,
+.pantalla-seccion .frase-boda {
+    color: var(--azul-francia);
+}
+
+.pantalla-seccion h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+    color: var(--dorado-pastel);
+}
+
+/* Las 4 esquinas con flores más grandes */
+.esquina {
+    position: absolute;
+    width: 75px;
+    height: 75px;
+    border-style: solid;
+    border-color: var(--azul-francia);
+    pointer-events: none;
+    z-index: 2;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.esquina.tl { top: 15px; left: 15px; border-width: 2px 0 0 2px; }
+.esquina.tr { top: 15px; right: 15px; border-width: 2px 2px 0 0; }
+.esquina.bl { bottom: 15px; left: 15px; border-width: 0 0 2px 2px; }
+.esquina.br { bottom: 15px; right: 15px; border-width: 0 2px 2px 0; }
+
+.contenido-bloque, .contenedor-bloque {
+    max-width: 450px;
+    width: 100%;
+    text-align: center;
+    z-index: 3;
+}
+
+.frase-boda {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.15rem;
+    font-style: italic;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    padding: 0 10px;
+}
+
+.animar-scroll {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 1.6s cubic-bezier(0.22, 1, 0.36, 1), transform 1.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.animar-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.animar-lateral {
+    opacity: 0;
+    transform: translateX(-70px);
+    transition: opacity 2s cubic-bezier(0.22, 1, 0.36, 1), transform 2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.animar-lateral.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* ==========================================
+   4. SECCIÓN 1: PORTADA PRINCIPAL (ESTILO ORIGINAL)
+   ========================================== */
+.portada {
+    background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), 
+        url('assets/imagenes/foto1.jpeg'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.portada .esquina {
+    display: none;
+}
+
+.portada h1,
+.portada .subtitulo-seccion,
+.portada .frase-boda {
+    color: #ffffff;
+}
+
+.novios {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2.8rem;
+    margin-bottom: 15px;
+    color: #ffffff;
+}
+
+.subtitulo-seccion {
+    display: block;
+    font-size: 0.95rem;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+/* ==========================================
+   5. SECCIÓN 2: CUENTA REGRESIVA
+   ========================================== */
+.fecha-boda-contenedor {
+    margin-bottom: 35px;
+}
+
+.fecha-linea {
+    font-size: 0.9rem;
+    letter-spacing: 4px;
+    color: var(--azul-francia);
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.fecha-bloque-central {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    border-top: 1px solid rgba(0, 35, 102, 0.2);
+    border-bottom: 1px solid rgba(0, 35, 102, 0.2);
+    padding: 10px 0;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.fecha-dia-nombre, .fecha-anio {
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--azul-francia);
+}
+
+.fecha-numero {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 3.5rem;
+    font-style: italic;
+    line-height: 1;
+    color: var(--azul-francia);
+}
+
+#contador {
+    font-size: 1.3rem;
+    margin-bottom: 25px;
+    font-weight: 600;
+    color: var(--azul-francia);
+    letter-spacing: 1px;
+}
+
+/* ==========================================
+   6. SECCIÓN 2.5: UBICACIÓN
+   ========================================== */
+.contenedor-mapa {
+    width: 100%;
+    height: 250px;
+    border-radius: 12px;
+    overflow: hidden; 
+    box-shadow: 0 4px 15px rgba(0, 35, 102, 0.08);
+    margin-bottom: 25px;
+    border: 1px solid rgba(0, 35, 102, 0.2);
+}
+
+.contenedor-mapa iframe {
+    display: block; 
+    width: 100%;
+    height: 100%;
+}
+
+.btn-como-llegar {
+    display: inline-block;
+    width: 100%;
+    padding: 12px 20px;
+    background-color: var(--azul-francia);
+    color: #ffffff;
+    text-decoration: none; 
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: 2px solid var(--azul-francia);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 35, 102, 0.15);
+}
+
+.btn-como-llegar:hover {
+    background-color: var(--dorado-pastel);
+    border-color: var(--dorado-pastel);
+}
+
+/* ==========================================
+   7. SECCIÓN 3: ITINERARIO
+   ========================================== */
+.linea-tiempo {
+    margin-top: 30px;
+    text-align: left;
+    padding-left: 10px;
+    border-left: 2px solid var(--dorado-pastel);
+}
+
+.momento {
+    margin-bottom: 25px;
+    padding-left: 15px;
+    position: relative;
+}
+
+.momento::before {
+    content: '';
+    position: absolute;
+    left: -21px;
+    top: 5px;
+    width: 10px;
+    height: 10px;
+    background-color: var(--dorado-pastel);
+    border-radius: 50%;
+}
+
+.momento h3 {
+    font-size: 1.15rem;
+    margin-bottom: 5px;
+    color: var(--azul-francia);
+}
+
+.momento p {
+    font-size: 0.95rem;
+    color: var(--azul-francia);
+    opacity: 0.85;
+}
+
+/* ==========================================
+   8. SECCIÓN 4: NUESTRA HISTORIA & CARRUSEL
+   ========================================== */
+.texto-historia {
+    font-style: italic;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    text-align: left;
+    margin-bottom: 20px;
+    color: var(--azul-francia);
+    opacity: 0.9;
+}
+
+.carrusel-contenedor {
+    width: 100%;
+    margin: 20px 0;
+}
+
+.carrusel-track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    gap: 15px;
+    padding-bottom: 10px;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.carrusel-track::-webkit-scrollbar {
+    display: none;
+}
+
+.carrusel-slide {
+    flex: 0 0 80%;
+    scroll-snap-align: center;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 35, 102, 0.15);
+}
+
+.carrusel-slide img {
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+    display: block;
+}
+
+.indicador-carrusel {
+    font-size: 0.8rem;
+    color: var(--azul-francia);
+    margin-top: 10px;
+    font-weight: 600;
+}
+
+/* ==========================================
+   9. SECCIÓN 5: VERSÍCULO
+   ========================================== */
+.foto-versiculo-contenedor {
+    width: 100%;
+    max-width: 300px;
+    height: 360px;
+    margin: 0 auto 20px auto;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0, 35, 102, 0.15);
+}
+
+.foto-versiculo-fade {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 100%);
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 100%);
+}
+
+.versiculo-texto {
+    margin-top: 10px;
+}
+
+/* ==========================================
+   10. TARJETAS INTERIORES
+   ========================================== */
+.tarjeta-interior {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 30px 25px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 35, 102, 0.08);
+    border: 1px solid rgba(0, 35, 102, 0.15);
+    text-align: center;
+}
+
+.tarjeta-interior p {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--azul-francia);
+}
+
+/* ==========================================
+   11. SECCIÓN 7: CONFIRMACIÓN Y CIERRE
+   ========================================== */
+.formulario-caja {
+    background-color: #ffffff;
+    padding: 35px 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 35, 102, 0.08);
+    border: 1px solid rgba(0, 35, 102, 0.15);
+}
+
+.bajada-form {
+    font-size: 0.9rem;
+    color: var(--azul-francia);
+    font-weight: 600;
+    margin-bottom: 25px;
+}
+
+.campo {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    color: var(--azul-francia);
+}
+
+.texto-nota {
+    font-size: 0.78rem;      
+    color: #555555;          
+    font-weight: normal;     
+    margin-top: -2px;        
+    margin-bottom: 8px;      
+    line-height: 1.3;        
+}
+
+input[type="text"], select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid rgba(0, 35, 102, 0.2);
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    background-color: #fff;
+    color: var(--azul-francia);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input[type="text"]:focus, select:focus {
+    border-color: var(--azul-francia);
+    box-shadow: 0 0 6px rgba(0, 35, 102, 0.2);
+}
+
+.btn-enviar {
+    width: 100%;
+    padding: 14px;
+    background-color: var(--azul-francia);
+    color: white;
+    border: 2px solid var(--azul-francia);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 35, 102, 0.15);
+}
+
+.btn-enviar:hover {
+    background-color: var(--dorado-pastel);
+    border-color: var(--dorado-pastel);
+}
+
+.cierre-final {
+    margin-top: 35px;
+    font-family: Georgia, serif;
+    font-style: italic; /* Cambialo a 'normal' si lo querés sin cursiva */
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    color: var(--azul-francia);
+}
+/* ==========================================
+   AVISO / NOTA DE INVITACIÓN & ADORNO FLORAL / SEPARADOR
+   ========================================== */
+.nota-invitacion {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: var(--azul-francia);
+    background-color: rgba(204, 168, 124, 0.08);
+    border-left: 3px solid var(--dorado-pastel);
+    padding: 12px 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.nota-invitacion p {
+    margin-bottom: 8px;
+}
+
+.nota-invitacion p:last-child {
+    margin-bottom: 0;
+}
+
+.adorno-floral {
+    text-align: center;
+    margin: 15px auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.adorno-floral svg,
+.separador-svg-img {
+    width: 180px;
+    height: 32px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+    filter: drop-shadow(0 2px 4px rgba(0, 35, 102, 0.1));
+}
